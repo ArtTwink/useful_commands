@@ -1,0 +1,2 @@
+удалить историю и саму команду
+for h in $(seq 1006 1008); do history -d 1006; done; history -d $(history 1 | awk '{print $1}')

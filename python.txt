@@ -1,0 +1,2 @@
+Python using proxy repo
+python3 -m pip install --user --index-url https://%env.NEXUS_USER%:%env.NEXUS_PASSWORD%@nexus-ci.corp.dev.vtb/repository/ulsf-pypi --extra-index-url https://%env.NEXUS_USER%:%env.NEXUS_PASSWORD%@nexus-ci.corp.dev.vtb/repository/ulsf-pypi/simple --trusted-host=nexus-ci.corp.dev.vtb requests
