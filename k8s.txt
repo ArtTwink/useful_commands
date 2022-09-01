@@ -11,3 +11,6 @@ else:
     ssl._create_default_https_context = _create_unverified_https_context
 
 print(urllib.request.urlopen("https://$ADDRESS").getcode())'
+
+#Alias for running k9s in current namespace, because k9s time to time can't properly get namespace on some specific clusters
+alias k9sn="k9s -n $(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)"
