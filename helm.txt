@@ -1,0 +1,2 @@
+#Get all resources created by chart
+helm get manifest -n $NS $CHART_NAME | yq -N eval '[.kind, .metadata.name] | join("/")' - | sort

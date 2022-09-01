@@ -1,0 +1,13 @@
+#Check URL availability without curl and nc but python
+kubectl exec -n $NS deployment/$DEPLOYMENT_NAME -it -- python -c \
+'import urllib.request
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+print(urllib.request.urlopen("https://$ADDRESS").getcode())'

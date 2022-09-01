@@ -1,2 +1,19 @@
-Python using proxy repo
+#Python using proxy repo
 python3 -m pip install --user --index-url https://%env.NEXUS_USER%:%env.NEXUS_PASSWORD%@nexus-ci.corp.dev.vtb/repository/ulsf-pypi --extra-index-url https://%env.NEXUS_USER%:%env.NEXUS_PASSWORD%@nexus-ci.corp.dev.vtb/repository/ulsf-pypi/simple --trusted-host=nexus-ci.corp.dev.vtb requests
+
+#Check status_code without curl or nc
+import urllib.request
+print(urllib.request.urlopen("https://$ADDRESS").getcode())
+
+#The same but disable SSL check
+import urllib.request
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+print(urllib.request.urlopen("https://$ADDRESS).getcode())
