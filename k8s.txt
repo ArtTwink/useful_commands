@@ -12,5 +12,10 @@ else:
 
 print(urllib.request.urlopen("https://$ADDRESS").getcode())'
 
+#The same but with ssl:
+kubectl exec -n $NS deployment/$DEPLOYMENT_NAME -it -- python -c \
+'import urllib.request
+print(urllib.request.urlopen("https://$ADDRESS").getcode())'
+
 #Alias for running k9s in current namespace, because k9s time to time can't properly get namespace on some specific clusters
 alias k9sn="k9s -n $(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)"
