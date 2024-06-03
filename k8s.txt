@@ -19,3 +19,10 @@ print(urllib.request.urlopen("https://$ADDRESS").getcode())'
 
 #Alias for running k9s in current namespace, because k9s time to time can't properly get namespace on some specific clusters
 alias k9sn="k9s -n $(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)"
+
+#How to get name of all pods and their imagePullPolicy in one namespace in one query using kubectl
+kubectl get pods -n <namespace> -o=jsonpath='{range .items[*]}{.metadata.name}, {.spec.containers[*].imagePullPolicy}{"\n"}{end}'
+
+Список подов + реквесты + лимиты
+kubectl get pods --namespace <your-namespace> --no-headers=true \
+  -o custom-columns='NAME:.metadata.name, CPU_REQUEST:.spec.containers[*].resources.requests.cpu, MEMORY_REQUEST:.spec.containers[*].resources.requests.memory'
