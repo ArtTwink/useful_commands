@@ -26,3 +26,6 @@ kubectl get pods -n <namespace> -o=jsonpath='{range .items[*]}{.metadata.name}, 
 Список подов + реквесты + лимиты
 kubectl get pods --namespace <your-namespace> --no-headers=true \
   -o custom-columns='NAME:.metadata.name, CPU_REQUEST:.spec.containers[*].resources.requests.cpu, MEMORY_REQUEST:.spec.containers[*].resources.requests.memory'
+
+#show allocated resources on all nodes
+kubectl describe nodes | sed -n '/^Allocated /,/^Events:/ { /^  [^(]/ p; } ; /^Name: / p'

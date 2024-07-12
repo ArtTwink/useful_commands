@@ -1,2 +1,8 @@
-удалить историю и саму команду
+#удалить историю и саму команду
 for h in $(seq 1006 1008); do history -d 1006; done; history -d $(history 1 | awk '{print $1}')
+
+#найти одинаковые строки в нескольких файлах
+awk '(NR==FNR){a[$0]=1;next}
+     (FNR==1){ for(i in a) if(a[i]) {a[i]=0} else {delete a[i]} }
+     ($0 in a) { a[$0]=1 }
+     END{for (i in a) if (a[i]) print i}' file1 file2 file3 ... file200
