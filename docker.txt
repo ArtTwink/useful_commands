@@ -4,3 +4,6 @@ docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_genconfig -u u
 docker run -v $OVPN_DATA:/etc/openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN kylemanna/openvpn - поднятие докера
 docker run -v $OVPN_DATA:/etc/openvpn --rm -it kylemanna/openvpn easyrsa build-client-full CLIENTNAME nopass - создать пользователя
 docker run -v $OVPN_DATA:/etc/openvpn --rm kylemanna/openvpn ovpn_getclient CLIENTNAME > CLIENTNAME.ovpn - создать файл для подключения
+# Скачать образ, переименовать, запушить
+images=("quay.io/jupyterhub/configurable-http-proxy:4.6.1" "quay.io/jupyterhub/k8s-hub:3.3.8" "quay.io/jupyterhub/k8s-image-awaiter:3.3.8" "quay.io/jupyterhub/k8s-network-tools:3.3.8" "quay.io/jupyterhub/k8s-secret-sync:3.3.8" "quay.io/jupyterhub/k8s-singleuser-sample:3.3.8" "registry.k8s.io/kube-scheduler:v1.26.15" "registry.k8s.io/pause:3.9" "traefik:v2.11.0"); for image in "${images[@]}"; do docker pull $image && new_image="localhost:8123/docker-hosted-rc/jupyterhub/$(basename ${image})" && docker tag $image $new_image && docker push $new_image; done
+
