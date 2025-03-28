@@ -39,3 +39,10 @@ for node in $(kubectl get nodes -o name); do
     echo "$node: $(kubectl get pods --all-namespaces --field-selector spec.nodeName=$(basename $node) --no-headers | wc -l) pods"
 done
 
+#Percentage of memory consumption in comparison of limits
+POD=
+MEMORY_USAGE=$(kubectl top pod $POD --no-headers | awk '{print $3}' | sed 's/Mi//') && \
+MEMORY_LIMIT=$(kubectl get pod $POD -o jsonpath='{.spec.containers[0].resources.limits.memory}' | sed 's/Gi//' | awk '{print $1 * 1024}') && \
+echo "Memory Usage: ${MEMORY_USAGE}Mi" && \
+echo "Memory Limit: ${MEMORY_LIMIT}Mi" && \
+echo "Usage Percentage: $(awk "BEGIN {printf \"%.2f%%\", ($MEMORY_USAGE/$MEMORY_LIMIT)*100}")"
